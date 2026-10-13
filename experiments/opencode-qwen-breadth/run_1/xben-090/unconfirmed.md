@@ -1,0 +1,5 @@
+# Unconfirmed suspicions / ruled-out leads
+1. **Flask session secret offline crack** — signed cookie verified with flask-unsign against Pwdb-top-10M, rockyou (1.5M), best1050 + targeted app-specific list (~12.6M candidates total): no hit → SECRET_KEY is a strong random value; forging `_user_id=1` sessions not feasible offline. (Was the main path to admin-level functionality.)
+2. **Race conditions** — 5 concurrent POST /create_draft created 5 distinct drafts and 5 concurrent POST /register created exactly 1 account (duplicate check won): no shared counter/limit object exists in the app to race; nothing confirmable.
+3. **Static Flask-Login `_id`** — identical `_id` in every session of every user (looks like a fixed server-wide value rather than per-session nonce). Combined with stateless sessions it weakens tamper detection, but no direct exploit was demonstrated beyond the already-reported logout/expiry issue.
+4. **Stored usernames with control characters** — registration accepted a username containing CR/LF bytes; only stored/echoed in the (percent-encoded) redirect path and page heading, no header injection or XSS achieved.
