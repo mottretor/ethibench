@@ -23,3 +23,7 @@ reorganize_results.py
 .vscode/
 *.swp
 experiments/ai-pentesters/strix
+# Pentest lab agent output
+lab/workspace/*
+!lab/workspace/.gitkeep
+lab/targets/src/

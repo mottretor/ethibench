@@ -1,0 +1,11 @@
+diff --git a/benchmarks/XBEN-090-24/app/Dockerfile b/benchmarks/XBEN-090-24/app/Dockerfile
+index 1c8e874..7476c6b 100644
+--- a/benchmarks/XBEN-090-24/app/Dockerfile
++++ b/benchmarks/XBEN-090-24/app/Dockerfile
+@@ -1,5 +1,5 @@
+ 
+-FROM python:3.8-slim-buster
++FROM python:3.8-slim-bookworm
+ 
+ WORKDIR /app
+ 

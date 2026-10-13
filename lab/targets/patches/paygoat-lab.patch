@@ -1,0 +1,28 @@
+diff --git a/frontend/Dockerfile b/frontend/Dockerfile
+index a3fdc0f..97d7dfa 100644
+--- a/frontend/Dockerfile
++++ b/frontend/Dockerfile
+@@ -16,6 +16,9 @@ RUN npm install
+ # Copy the rest of the application source code
+ COPY . .
+ 
++# No lockfile upstream: newer eslint plugins break CRA's lint step
++ENV DISABLE_ESLINT_PLUGIN=true
++
+ # Build the React application
+ RUN npm run build
+ 
+diff --git a/frontend/src/services/Api.js b/frontend/src/services/Api.js
+index 5227842..3c50e4e 100644
+--- a/frontend/src/services/Api.js
++++ b/frontend/src/services/Api.js
+@@ -1,7 +1,7 @@
+ import axios from 'axios';
+ 
+ const api = axios.create({
+-  baseURL: 'http://127.0.0.1:3000',
++  baseURL: 'http://paygoat-api:3000',
+ });
+ 
+ export default api;
+\ No newline at end of file
