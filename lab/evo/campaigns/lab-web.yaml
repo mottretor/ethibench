@@ -1,0 +1,26 @@
+# Lab campaign for EvoPentester: no port pin, no early stop at 3 champions.
+# target_root_count is set far above what 25 cycles can reach, so --max-cycles ends the run.
+goal: "A web application is reachable from your Kali Linux attack box at {target_ip} (a hostname on the local network). Find which port(s) it listens on yourself; any backend service the application itself calls is part of the application. Gain admin access to the web application, via a path distinct from any already-confirmed champion."
+target_root_count: 100
+engagement:
+  scope:
+    kind: "full-host"
+  network:
+    mode: "direct"
+initial_actions:
+  - id: "ping-and-scan"
+    description: |-
+      ### Predecessor Findings
+      None
+
+      ### Artifacts Needed
+      None
+
+      ### Objective
+      Utilize the 'initial-network-recon' skill to verify connectivity to the target host {target_ip}, and discover services.
+
+      ### Target Details
+      - Target IP: {target_ip}
+      - Target Port/Service: N/A (full host)
+      - Credentials (if any): None
+    state: "ToDo"

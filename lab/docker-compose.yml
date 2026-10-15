@@ -19,6 +19,37 @@ services:
       - targets
       - egress
 
+  # Clean Kali box for EvoPentester (ESO + ACI). Separate from kali-attacker so
+  # runs don't share files, shell history or agent state. Needs lab/evo.env
+  # (git-ignored) with OPENROUTER_API_KEY=...
+  kali-evo:
+    build: ./kali-evo
+    image: pentest-lab/kali-evo:latest
+    container_name: kali-evo
+    hostname: kali-evo
+    tty: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    volumes:
+      - ./evo-workspace:/workspace
+      # keep the `gh auth login` session across container recreates
+      - kali-evo-gh:/root/.config/gh
+    env_file:
+      - path: ./evo.env
+        required: false
+    environment:
+      - ACI_PROVIDER=openrouter
+      - ACI_MODEL_ID=qwen/qwen3.8-flash
+      - ACI_OPENROUTER_PROVIDER=alibaba
+      - ACI_MAX_STEPS=500
+      - ACI_TIME_LIMIT=3600
+      - ACI_SERVER_PORT=3000
+      - ACI_ARTIFACT_DIR=/workspace/aci-artifacts
+    networks:
+      - targets
+      - egress
+
   # ---------------------------------------------------------------------------
   # Targets: attached ONLY to `targets` (no internet, no host ports).
   # Sources come from targets/setup.sh; service names match dataset target_ids.
@@ -87,6 +118,9 @@ services:
       retries: 5
     networks:
       - targets
+
+volumes:
+  kali-evo-gh: {}
 
 networks:
   # Isolated network shared by the attacker and all targets; no internet access.

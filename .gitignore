@@ -27,3 +27,6 @@ experiments/ai-pentesters/strix
 lab/workspace/*
 !lab/workspace/.gitkeep
 lab/targets/src/
+lab/evo-workspace/*
+!lab/evo-workspace/.gitkeep
+lab/evo.env

@@ -58,3 +58,13 @@ Then, on the host:
 ```bash
 poetry run ethibench evaluate lab/workspace/<experiment> --dataset examples/dataset.yaml
 ```
+
+## Agents and setup on a new machine
+
+Two agent setups run on this lab: **opencode** in `kali-attacker` and **EvoPentester** (ESO + ACI) in the separate `kali-evo` container (own workspace `lab/evo-workspace/`, git-ignored, so runs never contaminate each other). The full step-by-step guide, including the problems we hit and how to run, watch and collect results, is in [`SETUP.md`](SETUP.md).
+
+Quick facts for `kali-evo`:
+
+- Needs `lab/evo.env` (git-ignored) with `OPENROUTER_API_KEY=...`, and a one-time `docker exec -it kali-evo gh auth login` (the `evopentester` repo is private; the login is kept in the `kali-evo-gh` volume).
+- Campaign: `lab/evo/campaigns/lab-web.yaml` (no port pin, `target_root_count: 100` so `--max-cycles` ends the run).
+- Always pass `--aci-config config/aci/docker.yaml` to `evopentester run`; the default ACI config points at another machine.
